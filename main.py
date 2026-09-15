@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from services.video_service import generate_video
+
 app = FastAPI(title="Unlimited Video Generator")
 
 
@@ -17,9 +19,5 @@ def home():
 
 
 @app.post("/generate")
-def generate_video(request: VideoRequest):
-    return {
-        "message": "Video generation request received",
-        "prompt": request.prompt,
-        "status": "queued"
-    }
+def create_video(request: VideoRequest):
+    return generate_video(request.prompt)
